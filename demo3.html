@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Roundabout - RaphaelJS Demos</title>
+  <style type="text/css">
+  body{ background-color: #333; text-align: center;}
+  
+  </style>
+</head>
+<body>
+  <div id="canvas"></div>
+  <script type="text/javascript" src="raphael-min.js"></script>
+  <script type="text/javascript">
+  var canvas = Raphael("canvas", 640, 480),
+      angle = 0,
+      set = canvas.set();
+
+  set.push(canvas.path("M320,240c-50,100,50,110,0,190")
+                 .attr({fill: "none", "stroke-width": 2})
+          );
+  set.push(canvas.circle(320, 450, 20)
+                 .attr({fill: "none", "stroke-width": 2})
+          );
+  s.push(canvas.circle(320, 240, 5)
+               .attr({fill: "none", "stroke-width": 10})
+        );
+  </script>
+</body>
+</html>
