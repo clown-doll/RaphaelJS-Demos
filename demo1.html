@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bouncer - RaphaelJS Demos</title>
+  <style type="text/css">
+  body{ background-color: #333;}
+  #canvas,
+  #operation{ width: 400px; height: 400px; margin: 0 auto;}
+  #operation{ text-align: center;}
+  </style>
+</head>
+<body>
+  <div id="canvas"></div>
+  <div id="operation">
+    <select id="easingx">
+      <option value="linear">Linear</option>
+      <option value="ease-in">Ease In</option>
+      <option value="ease-out">Ease Out</option>
+      <option value="ease-in-out">Ease In and Out</option>
+      <option value="back-in">Back In</option>
+      <option value="back-out">Back Out</option>
+      <option value="elastic">Elastic</option>
+      <option value="bounce">Bounce</option>
+    </select>
+    <select id="easingy">
+      <option value="linear">Linear</option>
+      <option value="ease-in">Ease In</option>
+      <option value="ease-out">Ease Out</option>
+      <option value="ease-in-out">Ease In and Out</option>
+      <option value="back-in">Back In</option>
+      <option value="back-out">Back Out</option>
+      <option value="elastic">Elastic</option>
+      <option value="bounce">Bounce</option>
+    </select>
+    <button id="run">Run</button>
+  </div>
+  <script type="text/javascript" src="raphael-min.js"></script>
+  <script type="text/javascript">
+  var canvas = Raphael("canvas"),  //创建svg画布对象
+      set = canvas.set(  //绘制静态坐标点
+                      canvas.circle(300, 200, 8),
+                      canvas.circle(200, 100, 8),
+                      canvas.circle(100, 200, 8),
+                      canvas.circle(200, 300, 8),
+                      canvas.circle(200, 200, 8)
+                    ).attr({stroke: "none", fill: "#666"}),
+      runCircle = canvas.circle(200, 200, 10)  //绘制运动小圆点
+                        .attr({"stroke": "#fff", "stroke-width": 4}),
+      run = document.getElementById("run"),  //触发动画按钮
+      //动画过渡选择
+      easingx = document.getElementById("easingx"),
+      easingy = document.getElementById("easingy"),
+      fade = function (id) {  //动画
+                return function () {
+                  set[id].attr({fill: "#fff", r: 12}).animate({fill: "#666", r: 8}, 500);
+                };
+              };
+
+      run.onclick = function () {  //点击执行动画
+        var ex = 'linear',
+            ey = 'linear';
+        runCircle.stop().animate({
+          "20%": {cy: 200, easing: ey, callback: fade(0)},
+          "40%": {cy: 100, easing: ey, callback: fade(1)},
+          "60%": {cy: 200, easing: ey, callback: fade(2)},
+          "80%": {cy: 300, easing: ey, callback: fade(3)},
+          "100%": {cy: 200, easing: ey, callback: fade(4)}
+        }, 5000).animate({
+          "20%": {cx: 300, easing: ex},
+          "40%": {cx: 200, easing: ex},
+          "60%": {cx: 100, easing: ex},
+          "80%": {cx: 200, easing: ex},
+          "100%": {cx: 200, easing: ex}
+        }, 5000);
+      };
+
+  </script>
+</body>
+</html>
