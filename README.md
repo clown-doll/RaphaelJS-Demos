@@ -2,7 +2,7 @@
 
 貌似有版本的区别。
 
-demo3 引用raphael-min.js跟raphael-min2.js的效果是不一样的。
+demo3, demo5 引用raphael-min.js跟raphael-min2.js的效果是不一样的。
 
 demo4 引用raphael-min.js能兼容到ie7（本人只测试到ie7），而引用raphael-min2.js只能兼容到ie9+。
 
