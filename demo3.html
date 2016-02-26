@@ -10,21 +10,30 @@
 </head>
 <body>
   <div id="canvas"></div>
-  <script type="text/javascript" src="raphael-min.js"></script>
+  <script type="text/javascript" src="scripts/raphael-min2.js"></script>
   <script type="text/javascript">
-  var canvas = Raphael("canvas", 640, 480),
-      angle = 0,
-      set = canvas.set();
-
-  set.push(canvas.path("M320,240c-50,100,50,110,0,190")
-                 .attr({fill: "none", "stroke-width": 2})
-          );
-  set.push(canvas.circle(320, 450, 20)
-                 .attr({fill: "none", "stroke-width": 2})
-          );
-  s.push(canvas.circle(320, 240, 5)
-               .attr({fill: "none", "stroke-width": 10})
-        );
+  var r = Raphael("canvas", 640, 480),  //创建svg画布对象
+      angle = 0;
+  while (angle < 360) {
+      var color = Raphael.getColor();  //每次调用都返回色谱中的下一个颜色
+      (function (t, c) {
+          r.circle(320, 450, 20).attr({stroke: c, fill: c, transform: t, "fill-opacity": .4}).click(function () {
+              s.animate({transform: t, stroke: c}, 2000, "bounce");
+          }).mouseover(function () {
+              this.animate({"fill-opacity": .75}, 500);
+          }).mouseout(function () {
+              this.animate({"fill-opacity": .4}, 500);
+          });
+      })("r" + angle + " 320 240", color);  //"r30 320 240" 设置以(320, 240)为基点旋转30度
+      
+      angle += 30;
+  }
+  Raphael.getColor.reset();  //将颜色值重置为红色
+  var s = r.set();
+  s.push(r.path("M320,240c-50,100,50,110,0,190").attr({fill: "none", "stroke-width": 2}));
+  s.push(r.circle(320, 450, 20).attr({fill: "none", "stroke-width": 2}));
+  s.push(r.circle(320, 240, 5).attr({fill: "none", "stroke-width": 10}));
+  s.attr({stroke: Raphael.getColor()});
   </script>
 </body>
 </html>

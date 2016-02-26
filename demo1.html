@@ -35,7 +35,7 @@
     </select>
     <button id="run">Run</button>
   </div>
-  <script type="text/javascript" src="raphael-min.js"></script>
+  <script type="text/javascript" src="scripts/raphael-min.js"></script>
   <script type="text/javascript">
   var canvas = Raphael("canvas"),  //创建svg画布对象
       set = canvas.set(  //绘制静态坐标点
@@ -56,7 +56,6 @@
                   set[id].attr({fill: "#fff", r: 12}).animate({fill: "#666", r: 8}, 500);
                 };
               };
-
       run.onclick = function () {  //点击执行动画
         var ex = 'linear',
             ey = 'linear';
@@ -74,7 +73,6 @@
           "100%": {cx: 200, easing: ex}
         }, 5000);
       };
-
   </script>
 </body>
 </html>
