@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Easing - RaphaelJS Demos</title>
+  <style type="text/css">
+  body{ background-color: #333; text-align: center;}
+  
+  </style>
+</head>
+<body>
+  <div id="canvas"></div>
+  <script type="text/javascript" src="raphael-min.js"></script>
+  <script type="text/javascript">
+  var canvas = Raphael("canvas", 800, 600), //创建svg画布对象
+      //.set() 创建类数组对象，用于存储元素。它不创建任何元素，只是将元素分组。
+      targets = canvas.set(),
+      labels = canvas.set(),
+      movers = canvas.set();
+
+  targets.push(canvas.circle(300, 100, 20),  //绘制一系列圆（目标）
+           canvas.circle(300, 150, 20),
+           canvas.circle(300, 200, 20),
+           canvas.circle(300, 250, 20),
+           canvas.circle(300, 300, 20),
+           canvas.circle(300, 350, 20),
+           canvas.circle(300, 400, 20),
+           canvas.circle(300, 450, 20));
+  targets.attr({fill: "#000",   //设置一系列圆的样式（目标）
+            stroke: "#fff",
+            "stroke-dasharray": "-",
+            opacity: .2});
+
+  //绘制标签文字说明
+  labels.push(canvas.text(330, 100, "linear (default)"),  //线性
+              canvas.text(330, 150, "> (ease-in)"),  //由慢到快
+              canvas.text(330, 200, "< (ease-out)"),  //由快到慢
+              canvas.text(330, 250, "<> (ease-in-out)"),  //由慢到快再到慢
+              canvas.text(330, 300, "bounce"),  //弹跳
+              canvas.text(330, 350, "elastic"),  //橡皮筋
+              canvas.text(330, 400, "backIn"),  //开始时回弹
+              canvas.text(330, 450, "backOut"));  //结束时回弹
+  labels.attr({font: "12px Fontin-Sans, Arial",  //设置文字说明样式
+               fill: "#fff",
+               "text-anchor": "start"});
+
+  //自定义属性
+  canvas.customAttributes.easingX = function(str){
+    return str;
+  };
+  movers.push(canvas.circle(100, 100, 20).attr({easingX: "linear"}),  //绘制一系列圆（移动）
+              canvas.circle(100, 150, 20).attr({easingX: ">"}),
+              canvas.circle(100, 200, 20).attr({easingX: "<"}),
+              canvas.circle(100, 250, 20).attr({easingX: "<>"}),
+              canvas.circle(100, 300, 20).attr({easingX: "bounce"}),
+              canvas.circle(100, 350, 20).attr({easingX: "elastic"}),
+              canvas.circle(100, 400, 20).attr({easingX: "backIn"}),
+              canvas.circle(100, 450, 20).attr({easingX: "backOut"}));
+  movers.attr({fill: "#000",      //设置一系列圆的样式（移动）
+               stroke: "#fff",
+               "fill-opacity": 0});
+
+
+  // 移动圆点击事件
+  movers.forEach(function (el) {
+    
+    el.click(function(){
+      
+      var circleX = el.attrs.cx == 300 ? 100 : 300,  //判断圆心x值
+          color = Raphael.getColor();  //取不同颜色值，每次调用都返回色谱中的下一个颜色
+
+      //动画
+      el.animate({cx: circleX, 
+                  "stroke-width": circleX / 100,
+                  fill: circleX - 100 ? color : "#000",
+                  "fill-opacity": +!!(circleX - 100)
+                 }, 1000, el.attrs.easingX);
+      
+      circleX = el.attrs.cx || 300;
+    
+    });
+
+  });
+  </script>
+</body>
+</html>
