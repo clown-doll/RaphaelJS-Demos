@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Rotation - RaphaelJS Demos</title>
+  <style type="text/css">
+  body{ background-color: #333; text-align: center;}
+  #canvas{ position: absolute; top: 50%; left: 50%; margin: -240px 0 0 -320px; height: 480px; width: 640px;}
+  </style>
+</head>
+<body>
+  <div id="canvas">
+    <img src="images/bee.jpg" alt="bee"  id="bee">
+  </div>
+  <script type="text/javascript" src="scripts/raphael-min.js"></script>
+  <script type="text/javascript">
+  var imgSrc = document.getElementById("bee").src,  //获取图片地址
+      angle = 0;  //初始角度
+
+  document.getElementById("canvas").innerHTML = "";
+
+  var canvas = Raphael("canvas", 640, 480);  //创建svg画布对象
+
+  canvas.circle(320, 240, 200)   //绘制并设置图片外围圆圈
+        .attr({fill: "#000",
+               "fill-opacity": .5,
+               "stroke-width": 5
+             });
+
+  var img = canvas.image(imgSrc, 160, 120, 320, 240),
+      btn1 = canvas.set(),
+      btn2 = canvas.set();
+
+  //绘制旋转按钮
+  btn1.push(canvas.circle(24.833, 26.917, 26.667).attr({stroke: "#ccc", fill: "#fff", "fill-opacity": .4, "stroke-width": 2}),
+            canvas.path("M12.582,9.551C3.251,16.237,0.921,29.021,7.08,38.564l-2.36,1.689l4.893,2.262l4.893,2.262l-0.568-5.36l-0.567-5.359l-2.365,1.694c-4.657-7.375-2.83-17.185,4.352-22.33c7.451-5.338,17.817-3.625,23.156,3.824c5.337,7.449,3.625,17.813-3.821,23.152l2.857,3.988c9.617-6.893,11.827-20.277,4.935-29.896C35.591,4.87,22.204,2.658,12.582,9.551z").attr({stroke: "none", fill: "#000"}),
+            canvas.circle(24.833, 26.917, 26.667).attr({fill: "#fff", opacity: 0})
+           );
+  btn2.push(canvas.circle(24.833, 26.917, 26.667).attr({stroke: "#ccc", fill: "#fff", "fill-opacity": .4, "stroke-width": 2}),
+            canvas.path("M37.566,9.551c9.331,6.686,11.661,19.471,5.502,29.014l2.36,1.689l-4.893,2.262l-4.893,2.262l0.568-5.36l0.567-5.359l2.365,1.694c4.657-7.375,2.83-17.185-4.352-22.33c-7.451-5.338-17.817-3.625-23.156,3.824C6.3,24.695,8.012,35.06,15.458,40.398l-2.857,3.988C2.983,37.494,0.773,24.109,7.666,14.49C14.558,4.87,27.944,2.658,37.566,9.551z").attr({stroke: "none", fill: "#000"}),
+            canvas.circle(24.833, 26.917, 26.667).attr({fill: "#fff", opacity: 0}));
+  btn1.translate(10, 181);
+  btn2.translate(10, 245);
+  
+  //旋转按钮事件绑定
+  btn1[2].click(function () {
+    angle -= 90;
+    img.stop().animate({transform: "r" + angle}, 1000, "<>");
+  }).mouseover(function () {
+    btn1[1].animate({fill: "#fc0"}, 300);
+  }).mouseout(function () {
+    btn1[1].stop().attr({fill: "#000"});
+  });
+
+  //旋转按钮事件绑定
+  btn2[2].click(function () {
+    angle += 90;
+    img.animate({transform: "r" + angle}, 1000, "<>");
+  }).mouseover(function () {
+    btn2[1].animate({fill: "#fc0"}, 300);
+  }).mouseout(function () {
+    btn2[1].stop().attr({fill: "#000"});
+  });
+
+  </script>
+</body>
+</html>
